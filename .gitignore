@@ -4,7 +4,6 @@ __pycache__/
 *$py.class
 .vscode
 env
-database.db
 
 # C extensions
 *.so
