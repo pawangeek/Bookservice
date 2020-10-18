@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Book Service</title>
+
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+	<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}"
+
+	<!-- FontAwesome JS -->
+	<script defer src="{{ url_for('static', filename='js/fontawesome.min.js') }}"></script>
+
+	<!-- Theme CSS -->
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/drip.css') }}">
+	<link id="theme-style" rel="stylesheet" href="{{ url_for('static', filename='css/theme-7.css') }}">
+	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
+
+
+</head>
+
+<body>
+
+	<nav class="navbar navbar-expand-sm fixed-top navbar-light bg-white">
+		<div class="container">
+			<a class="navbar-brand" href="{{ url_for('home') }}"
+				style="font-family: 'Pacifico'; font-size: 30px;"><b>Book Service</b></a>
+			<button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+				data-target="#navbar1">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbar1">
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ url_for('home') }}" style="font-size: 20px;">Home</a>
+					</li>
+					{% if current_user.is_authenticated %}
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ url_for('logout') }}" style="font-size: 20px;">Logout</a>
+					</li>
+					{% endif %}
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="main-wrapper">
+
+		<section class="blog-list px-3 py-5 p-md-5">
+			
+			<div class="container">
+				<h1 style="text-align: center;">Verses</h1><br>
+				<div class="row">
+					
+					<div class="col-md-4 mb-3">
+						<div class="card blog-post-card">
+							<div class="card-body">
+                                
+                                <form name="addForm" id="addForm" method="POST" action="{{ url_for('home') }}" novalidate>
+                                    <div class="control-group">
+                                        <div class="form-group floating-label-form-group controls">
+                                            <label>Chapter no.</label>
+                                            <input type="text" class="form-control" name="chapter" id="chapter" required
+                                                data-validation-required-message="Please enter a chapter">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <div class="form-group floating-label-form-group controls">
+                                            <label>Verse no.</label>
+                                            <input type="text" class="form-control" name="verse" id="verse" required
+                                                data-validation-required-message="Please enter a verse">
+                                            <p class="help-block text-danger"></p>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-secondary" id="sendMessageButton">Get</button>
+                                </form>
+							</div>
+                        </div>
+
+
+					</div>
+
+					
+				</div>
+                <!--//row-->
+                {% if posts %}
+                    {{ posts.content|safe}}
+
+                    {% if current_user.is_authenticated %}
+					<span><a class="btn btn-primary" href='/edit/{{posts.id}}' style="font-size: 20px;">Edit</a></span>
+                    <span><a class="btn btn-danger" href='/delete/{{posts.id}}' style="font-size: 20px;">Delete</a></span>
+                    {% endif %}
+                {% endif %}
+
+			</div>
+		</section>
+
+	</div>
+	<!--//main-wrapper-->
+
+
+	<!-- Javascript -->
+	<script src="{{ url_for('static', filename='plugins/jquery-3.4.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='plugins/popper.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
+
+</body>
+
+</html>
