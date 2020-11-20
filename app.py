@@ -31,6 +31,7 @@ def is_safe_url(target):
 
 class Books(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    book = db.Column(db.Integer, nullable=False)
     chapter = db.Column(db.Integer, nullable=False)
     verse = db.Column(db.Integer, nullable=False)
     date_posted = db.Column(db.DateTime, nullable=False)
@@ -86,12 +87,20 @@ def home():
     posts = None
 
     if request.method == 'POST':
+        book = request.form['book']
         chapter = request.form['chapter']
         verse = request.form['verse']
 
-        posts = Books.query.filter_by(verse=verse).one()
+        posts = Books.query.filter_by(book=book)
+        posts = posts.filter_by(chapter=chapter) 
+        posts = posts.filter_by(verse=verse)
+        posts = posts.filter().first()
+        try:
+            print(posts.content)
+        except AttributeError: 
+            print("Verse not found!") 
+            # posts.content.append("Verse not found!")
 
-        print(posts.content)
         return render_template('index.html', posts=posts)
 
     return render_template('index.html', posts=posts)
@@ -147,22 +156,27 @@ def delete(id):
     return redirect(url_for('home'))
 
 
-@app.route('/add')
+@app.route('/addbg')
 @login_required
-def add():
-    return render_template('add.html')
+def addbg():
+    return render_template('addbg.html')
 
+@app.route('/addhb')
+@login_required
+def addhb():
+    return render_template('addhb.html')
 
 @app.route('/addverse', methods=['POST'])
 @login_required
 def addverse():
 
+    book = request.form['book']
     chapter = request.form['chapter']
     verse = request.form['verse']
     date_posted = datetime.now()
     content = request.form['ckeditor']
 
-    post = Books(chapter=chapter, verse=verse, date_posted=date_posted, content=content)
+    post = Books(book=book, chapter=chapter, verse=verse, date_posted=date_posted, content=content)
 
     db.session.add(post)
     db.session.commit()
