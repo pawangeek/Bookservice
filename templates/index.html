@@ -40,11 +40,14 @@
 					</li>
 					{% if current_user.is_authenticated %}
 					<li class="nav-item active">
+						<a class="nav-link" href="{{ url_for('add') }}" style="font-size: 20px;">Add</a>
+					</li>
+					<li class="nav-item active">
 						<a class="nav-link" href="{{ url_for('logout') }}" style="font-size: 20px;">Logout</a>
 					</li>
 					{% else %}
 					<li class="nav-item active">
-						<a class="nav-link" href="{{ url_for('login') }}" style="font-size: 20px;">Contributor-Login</a>
+						<a class="nav-link" href="{{ url_for('login') }}" style="font-size: 20px;">Login</a>
 					</li>
 
 					{% endif %}
@@ -59,7 +62,7 @@
 		<section class="blog-list px-3 py-5 p-md-5">
 
 			<div class="container">
-				<h1 style="text-align: center;">Verses</h1><br>
+				<h2 style="text-align: center;">Verses</h2><br>
 				<div class="row">
 
 					<div class="col-md-4 mb-3 mx-auto">
@@ -71,12 +74,11 @@
 									<div class="control-group">
 										<div class="form-group floating-label-form-group controls">
 											<label>Select Book</label><br>
-											<select name="book" id="book" required>
+											<select name="book" class="form-control" style="padding-top: 0.0rem; padding-bottom: 0.0rem" name="book" id="book">
 												<option value=1>Bhagwad Geeta</option>
 												<option value=2>Holy Bible</option>
 											</select>
-											<!-- <input type="text" class="form-control" name="book" id="book" required
-												data-validation-required-message="Please select a book"> -->
+
 											<p class="help-block text-danger"></p>
 										</div>
 									</div>
@@ -96,7 +98,9 @@
 											<p class="help-block text-danger"></p>
 										</div>
 									</div>
-									<button type="submit" class="btn btn-secondary" id="sendMessageButton">Get</button>
+									<div class="text-center">
+										<button type="submit" class="btn btn-secondary" id="sendMessageButton" style="padding-right: 4rem; padding-left: 4rem;">Get</button>
+									</div>
 								</form>
 							</div>
 						</div>
@@ -106,21 +110,28 @@
 
 
 				</div>
+
+				<div class="col-md-4 mb-3 mx-auto">
 				<!--//row-->
 				{% if posts %}
-				{{ posts.content|safe}}
 
-				{% if current_user.is_authenticated %}
-				<span><a class="btn btn-primary" href='/edit/{{posts.id}}' style="font-size: 20px;">Edit</a></span>
-				<span><a class="btn btn-danger" href='/delete/{{posts.id}}' style="font-size: 20px;">Delete</a></span>
-				{% endif %}
+					{% if posts.book == 1 %}
+						<p><b>Book</b>: Bhagwad Geeta > Chap: {{posts.chapter}} > Verse: {{posts.verse}}</p>
+					{% else %}
+						<p><b>Book</b>: Holy Bible > Chap: {{posts.chapter}} > Verse: {{posts.verse}}</p>
+					{% endif %}
 
-				{% else %}
-				<h3>Verse not found!</h3>
+					{{ posts.content|safe}}
+
 				{% endif %}
+				</div>
 
 			</div>
 		</section>
+
+		<footer class="footer text-center py-2 theme-bg-dark" style="bottom: 0px; width: 100%; position: absolute;">
+			<a href="https://www.linkedin.com/m/in/pawan-jain" target="_blank"><class="footer">Made with ❤ by Pawan Jain and Ketan Agrawal</a></small>
+		</footer>
 
 	</div>
 	<!--//main-wrapper-->

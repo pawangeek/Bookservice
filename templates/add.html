@@ -13,8 +13,9 @@
     <script defer src="{{ url_for('static', filename='js/fontawesome.min.js') }}"></script>
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}" <!-- Theme CSS
-        -->
+	<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}"
+
+    <!-- Theme CSS -->
     <link id="theme-style" rel="stylesheet" href="{{ url_for('static', filename='css/theme-7.css') }}">
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet'>
 
@@ -49,13 +50,23 @@
                 <form name="addForm" id="addForm" method="POST" action="{{ url_for('addverse') }}" novalidate>
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
+                            <label>Select Book</label><br>
+                            <select name="book" class="form-control" style="padding-top: 0.0rem; padding-bottom: 0.0rem" name="book" id="book">
+                                <option value=1>Bhagwad Geeta</option>
+                                <option value=2>Holy Bible</option>
+                            </select>
+
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <div class="form-group floating-label-form-group controls">
                             <label>Chapter no.</label>
                             <input type="text" class="form-control" name="chapter" id="chapter" required
                                 data-validation-required-message="Please enter a chapter">
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>
-                    <input name="book" value=2 id="hidden">
                     <div class="control-group">
                         <div class="form-group floating-label-form-group controls">
                             <label>Verse no.</label>
@@ -84,12 +95,9 @@
     {{ ckeditor.config() }}
 
     <script src="{{ url_for('static', filename='plugins/jquery-3.4.1.min.js') }}"></script>
-    <script>
-        $("#hidden").hide();
-    </script>
     <script src="{{ url_for('static', filename='plugins/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 
-</body>
-
+    </body>
+        
 </html>
