@@ -11,9 +11,8 @@
 
 
 	<link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-	<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}"
-
-	<!-- FontAwesome JS -->
+	<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}" <!-- FontAwesome
+		JS -->
 	<script defer src="{{ url_for('static', filename='js/fontawesome.min.js') }}"></script>
 
 	<!-- Theme CSS -->
@@ -43,6 +42,11 @@
 					<li class="nav-item active">
 						<a class="nav-link" href="{{ url_for('logout') }}" style="font-size: 20px;">Logout</a>
 					</li>
+					{% else %}
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ url_for('login') }}" style="font-size: 20px;">Contributor-Login</a>
+					</li>
+
 					{% endif %}
 				</ul>
 			</div>
@@ -53,51 +57,67 @@
 	<div class="main-wrapper">
 
 		<section class="blog-list px-3 py-5 p-md-5">
-			
+
 			<div class="container">
 				<h1 style="text-align: center;">Verses</h1><br>
 				<div class="row">
-					
-					<div class="col-md-4 mb-3">
+
+					<div class="col-md-4 mb-3 mx-auto">
 						<div class="card blog-post-card">
 							<div class="card-body">
-                                
-                                <form name="addForm" id="addForm" method="POST" action="{{ url_for('home') }}" novalidate>
-                                    <div class="control-group">
-                                        <div class="form-group floating-label-form-group controls">
-                                            <label>Chapter no.</label>
-                                            <input type="text" class="form-control" name="chapter" id="chapter" required
-                                                data-validation-required-message="Please enter a chapter">
-                                            <p class="help-block text-danger"></p>
-                                        </div>
-                                    </div>
-                                    <div class="control-group">
-                                        <div class="form-group floating-label-form-group controls">
-                                            <label>Verse no.</label>
-                                            <input type="text" class="form-control" name="verse" id="verse" required
-                                                data-validation-required-message="Please enter a verse">
-                                            <p class="help-block text-danger"></p>
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-secondary" id="sendMessageButton">Get</button>
-                                </form>
+
+								<form name="addForm" id="addForm" method="POST" action="{{ url_for('home') }}"
+									novalidate>
+									<div class="control-group">
+										<div class="form-group floating-label-form-group controls">
+											<label>Select Book</label><br>
+											<select name="book" id="book" required>
+												<option value=1>Bhagwad Geeta</option>
+												<option value=2>Holy Bible</option>
+											</select>
+											<!-- <input type="text" class="form-control" name="book" id="book" required
+												data-validation-required-message="Please select a book"> -->
+											<p class="help-block text-danger"></p>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="form-group floating-label-form-group controls">
+											<label>Chapter no.</label>
+											<input type="text" class="form-control" name="chapter" id="chapter" required
+												data-validation-required-message="Please enter a chapter">
+											<p class="help-block text-danger"></p>
+										</div>
+									</div>
+									<div class="control-group">
+										<div class="form-group floating-label-form-group controls">
+											<label>Verse no.</label>
+											<input type="text" class="form-control" name="verse" id="verse" required
+												data-validation-required-message="Please enter a verse">
+											<p class="help-block text-danger"></p>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-secondary" id="sendMessageButton">Get</button>
+								</form>
 							</div>
-                        </div>
+						</div>
 
 
 					</div>
 
-					
-				</div>
-                <!--//row-->
-                {% if posts %}
-                    {{ posts.content|safe}}
 
-                    {% if current_user.is_authenticated %}
-					<span><a class="btn btn-primary" href='/edit/{{posts.id}}' style="font-size: 20px;">Edit</a></span>
-                    <span><a class="btn btn-danger" href='/delete/{{posts.id}}' style="font-size: 20px;">Delete</a></span>
-                    {% endif %}
-                {% endif %}
+				</div>
+				<!--//row-->
+				{% if posts %}
+				{{ posts.content|safe}}
+
+				{% if current_user.is_authenticated %}
+				<span><a class="btn btn-primary" href='/edit/{{posts.id}}' style="font-size: 20px;">Edit</a></span>
+				<span><a class="btn btn-danger" href='/delete/{{posts.id}}' style="font-size: 20px;">Delete</a></span>
+				{% endif %}
+
+				{% else %}
+				<h3>Verse not found!</h3>
+				{% endif %}
 
 			</div>
 		</section>
